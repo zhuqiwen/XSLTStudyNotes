@@ -18,87 +18,94 @@
             <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-            <style>
-
-
-            </style>
         </head>
         <body>
 
             <div class="container">
+                <div>
+                    <h1>New Media Developer Code Challenge Two</h1>
+                </div>
+
+                <hr />
                 <div class="row">
 
-                    <ul id="ul-float-tabs" class="nav nav-pills nav-stacked col-md-4">
-                        <xsl:for-each select="//degree[generate-id()=generate-id(key('school', @school)[1])]">
+                    <div class="col-md-4">
+                        <ul id="ul-float-tabs" class="nav nav-pills nav-stacked affix">
+                            <xsl:for-each select="//degree[generate-id()=generate-id(key('school', @school)[1])]">
 
-                            <xsl:sort case-order="lower-first" select="@school"/>
-                            <!--<xsl:value-of select="count(key('school', .))"/>-->
-                            <xsl:variable name="tab_id" select="position()"/>
+                                <xsl:sort case-order="lower-first" select="@school"/>
+                                <!--<xsl:value-of select="count(key('school', .))"/>-->
+                                <xsl:variable name="tab_id" select="position()"/>
 
-                            <xsl:choose>
-                                <xsl:when test="position()=1">
-                                    <li class="active"><a data-toggle="pill" href="#{$tab_id}">Unkown</a></li>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <li><a data-toggle="pill" href="#{$tab_id}"><xsl:value-of select="@school"/></a></li>
-                                </xsl:otherwise>
-                            </xsl:choose>
+                                <xsl:choose>
+                                    <xsl:when test="position()=1">
+                                        <li class="active"><a data-toggle="pill" href="#{$tab_id}">Unkown</a></li>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <li><a data-toggle="pill" href="#{$tab_id}"><xsl:value-of select="@school"/></a></li>
+                                    </xsl:otherwise>
+                                </xsl:choose>
 
-                        </xsl:for-each>
-                    </ul>
-                    <div class="tab-content col-md-8">
-                        <xsl:for-each select="//degree[generate-id()=generate-id(key('school', @school)[1])]">
-                            <xsl:sort case-order="lower-first" select="@school"/>
-                            <xsl:variable name="content_id" select="position()"/>
-                            <xsl:choose>
-                                <xsl:when test="$content_id=1">
-                                    <div id="{$content_id}" class="tab-pane fade in active">
-                                        <h3>Unknown</h3>
-                                        <table class="table table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Program</th>
-                                                    <th>Undergraduate</th>
-                                                    <th>Master's</th>
-                                                    <th>Doctoral</th>
-                                                </tr>
-                                            </thead>
-                                            <xsl:for-each select="key('school', @school)">
-                                                <tr>
-                                                    <td><xsl:value-of select="@name"/></td>
-                                                    <td><xsl:value-of select="@bp"/></td>
-                                                    <td><xsl:value-of select="@mp"/></td>
-                                                    <td><xsl:value-of select="@dp"/></td>
-                                                </tr>
-                                            </xsl:for-each>
-                                        </table>
-                                    </div>
-                                </xsl:when>
-                                <xsl:otherwise>
-                                    <div id="{$content_id}" class="tab-pane fade">
-                                        <h3><xsl:value-of select="@school"/></h3>
-                                        <table class="table table-striped table-hover">
-                                            <thead>
-                                                <tr>
-                                                    <th>Program</th>
-                                                    <th>Undergraduate</th>
-                                                    <th>Master's</th>
-                                                    <th>Doctoral</th>
-                                                </tr>
-                                            </thead>
-                                            <xsl:for-each select="key('school', @school)">
-                                                <tr>
-                                                    <td><xsl:value-of select="@name"/></td>
-                                                    <td><xsl:value-of select="@bp"/></td>
-                                                    <td><xsl:value-of select="@mp"/></td>
-                                                    <td><xsl:value-of select="@dp"/></td>
-                                                </tr>
-                                            </xsl:for-each>
-                                        </table>
-                                    </div>
-                                </xsl:otherwise>
-                            </xsl:choose>
-                        </xsl:for-each>
+                            </xsl:for-each>
+                        </ul>
+
+                    </div>
+                    <div class="col-md-8">
+                        <div class="tab-content">
+                            <xsl:for-each select="//degree[generate-id()=generate-id(key('school', @school)[1])]">
+                                <xsl:sort case-order="lower-first" select="@school"/>
+                                <xsl:variable name="content_id" select="position()"/>
+                                <xsl:choose>
+                                    <xsl:when test="$content_id=1">
+                                        <div id="{$content_id}" class="tab-pane fade in active">
+                                            <h3>Unknown</h3>
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Program</th>
+                                                        <th>Undergraduate</th>
+                                                        <th>Master's</th>
+                                                        <th>Doctoral</th>
+                                                    </tr>
+                                                </thead>
+                                                <xsl:for-each select="key('school', @school)">
+                                                    <tr>
+                                                        <td><xsl:value-of select="@name"/></td>
+                                                        <td><xsl:value-of select="@bp"/></td>
+                                                        <td><xsl:value-of select="@mp"/></td>
+                                                        <td><xsl:value-of select="@dp"/></td>
+                                                    </tr>
+                                                </xsl:for-each>
+                                            </table>
+                                        </div>
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <div id="{$content_id}" class="tab-pane fade">
+                                            <h3><xsl:value-of select="@school"/></h3>
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Program</th>
+                                                        <th>Undergraduate</th>
+                                                        <th>Master's</th>
+                                                        <th>Doctoral</th>
+                                                    </tr>
+                                                </thead>
+                                                <xsl:for-each select="key('school', @school)">
+                                                    <tr>
+                                                        <td><xsl:value-of select="@name"/></td>
+                                                        <td><xsl:value-of select="@bp"/></td>
+                                                        <td><xsl:value-of select="@mp"/></td>
+                                                        <td><xsl:value-of select="@dp"/></td>
+                                                    </tr>
+                                                </xsl:for-each>
+                                            </table>
+                                        </div>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+                            </xsl:for-each>
+                        </div>
+
                     </div>
                 </div>
             </div>
