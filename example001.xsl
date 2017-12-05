@@ -1,22 +1,21 @@
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+    <xsl:output method="text"/>
 
-    <xsl:output method="html" />
+    <xsl:variable name="pAuthor" select="'David Perry'"/>
+
+    <xsl:key name="zipcode" match="address" use="zip"/>
 
     <xsl:template match="/">
-        <xsl:apply-templates />
+        <xsl:for-each select="//address[generate-id(.)=generate-id(key('zipcode', zip)[1])]">
+            <xsl:value-of select="zip"/>
+            <xsl:for-each select="key('zipcode', zip)">
+                haha
+            </xsl:for-each>
+        </xsl:for-each>
+
     </xsl:template>
 
-    <xsl:template match="A">
-        <b>
-            <xsl:value-of select="name()"/>
-            <xsl:value-of select="@id"/>
-        </b>
-    </xsl:template>
 
-    <xsl:template match="B">
-        <i>
-            <xsl:value-of select="name()"/>
-            <xsl:value-of select="@id"/>
-        </i>
-    </xsl:template>
 </xsl:stylesheet>

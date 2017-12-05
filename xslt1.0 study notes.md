@@ -92,4 +92,70 @@ Template defines what to do with a node of certain name; A and B are node names.
 
 No template is defined for \<C>. Thus, node C will not be displayed.
 
- 
+####OK, let's keep focus and go back on data. 
+###Question 3: Can we hold data in variables?
+YES. We can do this by 3 means (3 xsl elements):
+* variable
+* param
+* key
+####Question 3-1 What's the difference?
+
+* variable
+    * Don't be fooled by its name, it is IMMUTABLE. (A whole hour was spent trying to figure this out)
+    * Only 2 way to assign value to a variable
+```xml
+<xsl:variable name="ProgramName" select="'Accounting'">
+```
+This gives you a constant called **ProgramName** with value of a string *Accounting*.
+```xml
+<xsl:variable name="ProgramName">Accounting</xsl:variable>
+```
+This also gives you a constant called **ProgramName** with value of a string *Accounting*.
+
+* param
+    * It can be changed.
+    * It acts like function or method's argument in other programming languages.
+```xml
+<!-- define a function/method -->
+
+<xsl:template name="addTitleToName">
+   <xsl:param name="title">Dr.</xsl:param>
+   <xsl:param name="person_name">some_name</xsl:param>
+   Hello,
+   <xsl:value-of select="$title" />
+   <xsl:text> </xsl:text>
+   <xsl:value-of select="$person_name" />
+</xsl:template>
+
+<!-- call it -->
+
+<xsl:call-template name="addTitleToName">
+    <xsl:with-param name="title" select="'Professor'"/>
+    <xsl:with-param name="person_name" select="'Hopkins'"/>
+</xsl:call-template>
+```
+The above is basically a XSL version of the following(in PHP):
+```php
+public function addTitleToName($title, $person_name):
+{
+    return 'Hello,' . $title . $person_name;
+}
+
+echo addTitleToName('Professor', 'Hopkins')
+```
+
+* key
+    * It can be used to access the value of an attribute of a node
+    * It pass data/value to the key() function; in other words, if no key() function is used, the key element declaration is meaningless.
+     
+```xml
+<!-- declare a key -->
+<xsl:key name="program_school" match="degree" use="@school"/>
+
+<!-- use it -->
+<xsl:template match="degree">
+
+        <xsl:value-of select="key('program_school', 'Kelley School of Business')"/>
+</xsl:template>
+
+```
